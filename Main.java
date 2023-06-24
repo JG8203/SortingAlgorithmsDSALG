@@ -27,17 +27,16 @@ public class Main {
 
     private static void performAndTimeSort(String algorithmName, Function<Integer, Long> sortAction) {
         long totalExecutionTime = 0;
-        long totalCtr = 0;
+        long ctr = 0;
         for (int i = 0; i < 5; i++) {
             long startTime = System.currentTimeMillis();
-            long ctr = sortAction.apply(i);
+            ctr = sortAction.apply(i);
             long executionTime = System.currentTimeMillis() - startTime;
             totalExecutionTime += executionTime;
-            totalCtr += ctr;
             System.out.println((i + 1) + " " + algorithmName + " took " + executionTime + " ms");
         }
-        System.out.println(algorithmName + " Average Execution time: " + totalExecutionTime/5 + " ms");
-        System.out.println(algorithmName + " Total Operations: " + totalCtr);
+        System.out.println(algorithmName + " Average Execution time: " + totalExecutionTime / 5 + " ms");
+        System.out.println(algorithmName + " Total Operations: " + ctr);
         System.out.println();
     }
 }

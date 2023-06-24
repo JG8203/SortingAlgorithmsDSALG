@@ -34,7 +34,7 @@ public class Main {
             System.out.println((i + 1) + ". " + algorithmName + " took " + executionTime / 1e6 + " ms and had " + frequencyCount + " operations");
         }
         double averageExecutionTime = totalExecutionTime / 5;
-        System.out.println(algorithmName + " Average Execution time: " + averageExecutionTime / 5e6 + " ms");
+        System.out.println(algorithmName + " Average Execution time: " + averageExecutionTime / 1e6 + " ms");
         System.out.println();
     }
 }

@@ -10,8 +10,7 @@ public class SortingAlgorithms {
     public long insertionSort(Record[] array, int length) {
         long ctr = 1; // for the outer for loop initialization
         for (int i = 1; i < length; ++i) {
-            Record key = array[i]; ctr++;
-            ctr++; // for the key assignment
+            Record key = array[i]; ctr++; // for the key assignment
             int j = i - 1; ctr++;
             ctr++; // for the j initialization
             while (j >= 0 && array[j].getIdNumber() > key.getIdNumber()) {

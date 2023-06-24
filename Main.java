@@ -36,7 +36,7 @@ public class Main {
             totalCtr += ctr;
             System.out.println((i + 1) + " " + algorithmName + " took " + executionTime + " ms");
         }
-        System.out.println(algorithmName + " Total Execution time: " + totalExecutionTime + " ms");
+        System.out.println(algorithmName + " Average Execution time: " + totalExecutionTime/5 + " ms");
         System.out.println(algorithmName + " Total Operations: " + totalCtr);
         System.out.println();
     }

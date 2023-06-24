@@ -1,109 +1,121 @@
 public class SortingAlgorithms {
 
-    private void    swap(Record[] arr, int i, int j) {
-        Record temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
+    private void swap(Record[] array, int firstIndex, int secondIndex) {
+        Record temp = array[firstIndex];
+        array[firstIndex] = array[secondIndex];
+        array[secondIndex] = temp;
     }
 
-    public void insertionSort(Record[] arr, int n) {
-        for (int i = 1; i < n; ++i) {
-            Record key = arr[i];
+    // Insertion sort algorithm
+    public long insertionSort(Record[] array, int length) {
+        long ctr = 1; // for the outer for loop initialization
+        for (int i = 1; i < length; ++i) {
+            Record key = array[i];
+            ctr++; // for the key assignment
             int j = i - 1;
-            while (j >= 0 && arr[j].getIdNumber() > key.getIdNumber()) {
-                arr[j + 1] = arr[j];
-                j = j - 1;
+            ctr++; // for the j initialization
+            while (j >= 0 && array[j].getIdNumber() > key.getIdNumber()) {
+                ctr++; // for the while loop condition
+                array[j + 1] = array[j];
+                j--;
             }
-            arr[j + 1] = key;
+            array[j + 1] = key;
         }
+        return ctr;
     }
 
-    public void selectionSort(Record[] arr, int n) {
-        for (int i = 0; i < n - 1; i++) {
-            int min_idx = i;
-            for (int j = i + 1; j < n; j++)
-                if (arr[j].getIdNumber() < arr[min_idx].getIdNumber())
-                    min_idx = j;
-
-            swap(arr, min_idx, i);
-        }
-    }
-
-    private void merge(Record[] arr, int p, int q, int r) {
-        int n1 = q - p + 1;
-        int n2 = r - q;
-        Record[] L = new Record[n1];
-        Record[] R = new Record[n2];
-
-        System.arraycopy(arr, p, L, 0, n1);
-        System.arraycopy(arr, q + 1, R, 0, n2);
-
-        int i = 0, j = 0;
-        int k = p;
-
-        while (i < n1 && j < n2) {
-            if (L[i].getIdNumber() <= R[j].getIdNumber()) {
-                arr[k] = L[i];
-                i++;
-            } else {
-                arr[k] = R[j];
-                j++;
+    // Selection sort algorithm
+    public long selectionSort(Record[] array, int length) {
+        long ctr = 1; // for the outer for loop initialization
+        for (int i = 0; i < length - 1; i++) {
+            int minIndex = i;
+            ctr++; // for the minIndex initialization
+            ctr++; // for the inner for loop initialization
+            for (int j = i + 1; j < length; j++) {
+                ctr++; // for the inner for loop condition
+                if (array[j].getIdNumber() < array[minIndex].getIdNumber()) {
+                    minIndex = j;
+                }
             }
-            k++;
+            swap(array, minIndex, i);
         }
-
-        while (i < n1) {
-            arr[k] = L[i];
-            i++;
-            k++;
-        }
-
-        while (j < n2) {
-            arr[k] = R[j];
-            j++;
-            k++;
-        }
+        return ctr;
     }
 
-    public void mergeSort(Record[] arr, int p, int r) {
-        if (p < r) {
-            int q = (p + r) / 2;
-            mergeSort(arr, p, q);
-            mergeSort(arr, q + 1, r);
-            merge(arr, p, q, r);
-        }
-    }
+    // Merge sort algorithm
+    public long mergeSort(Record[] array, int start, int end) {
+        long ctr = 1; // for the outer if condition
+        if (start < end) {
+            int mid = (start + end) / 2;
+            ctr++; // for the mid assignment
+            ctr += mergeSort(array, start, mid);
+            ctr++; // for the first recursive call
+            ctr += mergeSort(array, mid + 1, end);
+            ctr++; // for the second recursive call
 
-    // For the extra algorithm, let's use quicksort
-    private int partition(Record arr[], int low, int high) {
-        int pivot = arr[high].getIdNumber();
-        int i = (low - 1);
-        for (int j = low; j < high; j++) {
-            if (arr[j].getIdNumber() < pivot) {
-                i++;
-                swap(arr, i, j);
+            int leftArraySize = mid - start + 1;
+            ctr++; // for the leftArraySize assignment
+            int rightArraySize = end - mid;
+            ctr++; // for the rightArraySize assignment
+
+            Record[] leftArray = new Record[leftArraySize];
+            ctr++; // for the leftArray initialization
+            Record[] rightArray = new Record[rightArraySize];
+            ctr++; // for the rightArray initialization
+
+            System.arraycopy(array, start, leftArray, 0, leftArraySize);
+            ctr++; // for the leftArray assignment
+            System.arraycopy(array, mid + 1, rightArray, 0, rightArraySize);
+            ctr++; // for the rightArray assignment
+
+            int k = start;
+            ctr++; // for the k initialization
+
+            ctr++; // for the inner for loop initialization
+            for (int i = 0, j = 0; i < leftArraySize && j < rightArraySize; k++) {
+                ctr++; // for the if condition
+                if (leftArray[i].getIdNumber() <= rightArray[j].getIdNumber()) {
+                    array[k] = leftArray[i++];
+                } else {
+                    array[k] = rightArray[j++];
+                }
+            }
+
+            ctr++; // for the final failing inner loop condition check
+            for (int i = k - start; i < leftArraySize; i++, k++) {
+                array[k] = leftArray[i];
+            }
+
+            ctr++; // for the final failing inner loop condition check
+            for (int j = k - (mid + 1); j < rightArraySize; j++, k++) {
+                array[k] = rightArray[j];
             }
         }
-        swap(arr, i + 1, high);
-        return i + 1;
-
+        return ctr;
     }
 
-    private boolean isSorted(Record[] arr, int n) {
-        for (int i = 1; i < n; i++) {
-            if (arr[i].getIdNumber() < arr[i - 1].getIdNumber()) {
+
+    // Function to check if the array is sorted
+    private boolean isSorted(Record[] array, int length) {
+        for (int i = 1; i < length; i++) {
+            if (array[i].getIdNumber() < array[i - 1].getIdNumber()) {
                 return false;
             }
         }
         return true;
     }
 
-    public void bogoSort(Record[] arr, int n) {
-        while (!isSorted(arr, n)) {
-            for (int i = 0; i < n; i++) {
-                int r = (int) (Math.random() * (i + 1));
-                swap(arr, i, r);
+    // Bogo sort algorithm
+    public long bogoSort(Record[] array, int length) {
+        long ctr = 1; // for the outer while loop initialization
+        while (!isSorted(array, length)) {
+            ctr++; // for the while loop condition
+            for (int i = 0; i < length; i++) {
+                int randomIndex = (int) (Math.random() * (i + 1));
+                ctr++; // for the randomIndex assignment
+                swap(array, i, randomIndex);
             }
         }
+        return ctr;
     }
 }

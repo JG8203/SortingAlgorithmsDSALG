@@ -1,71 +1,43 @@
 import java.util.Arrays;
+import java.util.function.Function;
 
 public class Main {
+    private static final String[] FILE_NAMES = {"almostsorted.txt", "random100.txt", "random25000.txt", "random50000.txt",
+            "random75000.txt", "random100000.txt", "totallyreversed.txt"};
+
     public static void main(String[] args) {
-        // Initialize the FileReader and the SortingAlgorithms
         FileReader fileReader = new FileReader();
-
         SortingAlgorithms sortingAlgorithms = new SortingAlgorithms();
-        
-        // Define the dataset file paths
-        String[] fileNames = {"almostsorted.txt", "random100.txt", "random25000.txt", "random50000.txt", "random75000.txt", "random100000.txt", "totallyreversed.txt"};
 
-        // Iterate over each file
-        for (String fileName : fileNames) {
-            System.out.println("\nProcessing file: " + fileName);
-
-            // Read the file
-            Record[] records = fileReader.readFile(fileName);
-            int n = records.length;
-            long averageExecutionTime = 0;
-            long startTime, endTime;
-            Record[] recordsCopy;
-            // Perform and time the sorting algorithms
-
-            // Insertion Sort
-            for(int i = 0; i < 5; i++)
-            {
-                recordsCopy = Arrays.copyOf(records, n);
-                startTime = System.currentTimeMillis();
-                sortingAlgorithms.insertionSort(recordsCopy, n);
-                endTime = System.currentTimeMillis();
-                System.out.println((i+1) + " Insertion Sort took " + (endTime - startTime) + " ms");
-                averageExecutionTime =  averageExecutionTime + (endTime - startTime);
-            }
-            System.out.println("Insertion Sort Average Execution time: " + averageExecutionTime/ 5  + " ms");
-            System.out.println(" ");
-            // Selection Sort
-            averageExecutionTime =  0;
-            for(int i = 0; i < 5; i++)
-            {
-                recordsCopy = Arrays.copyOf(records, n);
-                startTime = System.currentTimeMillis();
-                sortingAlgorithms.selectionSort(recordsCopy, n);
-                endTime = System.currentTimeMillis();
-                System.out.println((i+1) + " Selection Sort took " + (endTime - startTime) + " ms");
-                averageExecutionTime =  averageExecutionTime + (endTime-startTime);
-            }
-            System.out.println("Selection Sort Average Execution time: " + averageExecutionTime/ 5  + " ms");
-            System.out.println(" ");
-            // Merge Sort
-            averageExecutionTime =  0;
-            for(int i = 0; i < 5; i++)
-            {
-                recordsCopy = Arrays.copyOf(records, n);
-                startTime = System.currentTimeMillis();
-                sortingAlgorithms.mergeSort(recordsCopy, 0, n-1);
-                endTime = System.currentTimeMillis();
-                System.out.println((i+1) + " Merge Sort took " + (endTime - startTime) + " ms");
-                averageExecutionTime =  averageExecutionTime + (endTime-startTime);
-            }
-            System.out.println("Merge Sort Average Execution time: " + averageExecutionTime/ 5  + " ms");
-            // Bogo Sort
-         /*   recordsCopy = Arrays.copyOf(records, n);
-            startTime = System.currentTimeMillis();
-            sortingAlgorithms.bogoSort(recordsCopy, n);
-            endTime = System.currentTimeMillis();
-            System.out.println("Bogo Sort took " + (endTime - startTime) + " ms");
-          */
+        for (String fileName : FILE_NAMES) {
+            processFile(fileName, fileReader, sortingAlgorithms);
         }
+    }
+
+    private static void processFile(String fileName, FileReader fileReader, SortingAlgorithms sortingAlgorithms) {
+        System.out.println("\nProcessing file: " + fileName);
+        Record[] records = fileReader.readFile(fileName);
+        int n = records.length;
+
+        performAndTimeSort("Insertion Sort", i -> sortingAlgorithms.insertionSort(Arrays.copyOf(records, n), n));
+        performAndTimeSort("Selection Sort", i -> sortingAlgorithms.selectionSort(Arrays.copyOf(records, n), n));
+        performAndTimeSort("Merge Sort", i -> sortingAlgorithms.mergeSort(Arrays.copyOf(records, n), 0, n-1));
+        performAndTimeSort("Bogo Sort", i -> sortingAlgorithms.bogoSort(Arrays.copyOf(records, n), n));
+    }
+
+    private static void performAndTimeSort(String algorithmName, Function<Integer, Long> sortAction) {
+        long totalExecutionTime = 0;
+        long totalCtr = 0;
+        for (int i = 0; i < 5; i++) {
+            long startTime = System.currentTimeMillis();
+            long ctr = sortAction.apply(i);
+            long executionTime = System.currentTimeMillis() - startTime;
+            totalExecutionTime += executionTime;
+            totalCtr += ctr;
+            System.out.println((i + 1) + " " + algorithmName + " took " + executionTime + " ms");
+        }
+        System.out.println(algorithmName + " Total Execution time: " + totalExecutionTime + " ms");
+        System.out.println(algorithmName + " Total Operations: " + totalCtr);
+        System.out.println();
     }
 }

@@ -35,9 +35,9 @@ public class Main {
             totalExecutionTime += executionTime;
             System.out.println((i + 1) + " " + algorithmName + " took " + executionTime + " ms");
         }
-        double averageExecutionTime = totalExecutionTime/5;
-        System.out.println(algorithmName + " Average Execution time: " + averageExecutionTime / 5 + " ms");
-        System.out.println(algorithmName + " Total Operations: " + ctr);
+        double averageExecutionTime = totalExecutionTime / 5;
+        System.out.println(algorithmName + " Average Execution time: " + averageExecutionTime + " ms");
+        System.out.println(algorithmName + " Total Operatzions: " + ctr);
         System.out.println();
     }
 }

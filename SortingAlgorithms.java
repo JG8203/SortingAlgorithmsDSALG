@@ -17,7 +17,7 @@ public class SortingAlgorithms {
             while (j >= 0 && array[j].getIdNumber() > key.getIdNumber()) {
                 ctr++; // for the while loop condition
                 array[j + 1] = array[j]; ctr++;
-                j--; ctr++
+                j--; ctr++;
             }
             array[j + 1] = key; ctr++;
             ctr++; // loop check

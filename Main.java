@@ -4,6 +4,7 @@ public class Main {
     public static void main(String[] args) {
         // Initialize the FileReader and the SortingAlgorithms
         FileReader fileReader = new FileReader();
+
         SortingAlgorithms sortingAlgorithms = new SortingAlgorithms();
         
         // Define the dataset file paths
@@ -16,36 +17,55 @@ public class Main {
             // Read the file
             Record[] records = fileReader.readFile(fileName);
             int n = records.length;
-
+            long averageExecutionTime = 0;
+            long startTime, endTime;
+            Record[] recordsCopy;
             // Perform and time the sorting algorithms
 
             // Insertion Sort
-            Record[] recordsCopy = Arrays.copyOf(records, n);
-            long startTime = System.currentTimeMillis();
-            sortingAlgorithms.insertionSort(recordsCopy, n);
-            long endTime = System.currentTimeMillis();
-            System.out.println("Insertion Sort took " + (endTime - startTime) + " ms");
-
+            for(int i = 0; i < 5; i++)
+            {
+                recordsCopy = Arrays.copyOf(records, n);
+                startTime = System.currentTimeMillis();
+                sortingAlgorithms.insertionSort(recordsCopy, n);
+                endTime = System.currentTimeMillis();
+                System.out.println((i+1) + " Insertion Sort took " + (endTime - startTime) + " ms");
+                averageExecutionTime =  averageExecutionTime + (endTime - startTime);
+            }
+            System.out.println("Insertion Sort Average Execution time: " + averageExecutionTime/ 5  + " ms");
+            System.out.println(" ");
             // Selection Sort
-            recordsCopy = Arrays.copyOf(records, n);
-            startTime = System.currentTimeMillis();
-            sortingAlgorithms.selectionSort(recordsCopy, n);
-            endTime = System.currentTimeMillis();
-            System.out.println("Selection Sort took " + (endTime - startTime) + " ms");
-
+            averageExecutionTime =  0;
+            for(int i = 0; i < 5; i++)
+            {
+                recordsCopy = Arrays.copyOf(records, n);
+                startTime = System.currentTimeMillis();
+                sortingAlgorithms.selectionSort(recordsCopy, n);
+                endTime = System.currentTimeMillis();
+                System.out.println((i+1) + " Selection Sort took " + (endTime - startTime) + " ms");
+                averageExecutionTime =  averageExecutionTime + (endTime-startTime);
+            }
+            System.out.println("Selection Sort Average Execution time: " + averageExecutionTime/ 5  + " ms");
+            System.out.println(" ");
             // Merge Sort
-            recordsCopy = Arrays.copyOf(records, n);
-            startTime = System.currentTimeMillis();
-            sortingAlgorithms.mergeSort(recordsCopy, 0, n-1);
-            endTime = System.currentTimeMillis();
-            System.out.println("Merge Sort took " + (endTime - startTime) + " ms");
-
+            averageExecutionTime =  0;
+            for(int i = 0; i < 5; i++)
+            {
+                recordsCopy = Arrays.copyOf(records, n);
+                startTime = System.currentTimeMillis();
+                sortingAlgorithms.mergeSort(recordsCopy, 0, n-1);
+                endTime = System.currentTimeMillis();
+                System.out.println((i+1) + " Merge Sort took " + (endTime - startTime) + " ms");
+                averageExecutionTime =  averageExecutionTime + (endTime-startTime);
+            }
+            System.out.println("Merge Sort Average Execution time: " + averageExecutionTime/ 5  + " ms");
             // Bogo Sort
-            recordsCopy = Arrays.copyOf(records, n);
+         /*   recordsCopy = Arrays.copyOf(records, n);
             startTime = System.currentTimeMillis();
             sortingAlgorithms.bogoSort(recordsCopy, n);
             endTime = System.currentTimeMillis();
             System.out.println("Bogo Sort took " + (endTime - startTime) + " ms");
+          */
         }
     }
 }

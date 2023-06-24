@@ -1,5 +1,5 @@
 import java.util.Arrays;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Main {
     private static final String[] FILE_NAMES = {"10.txt", "random100.txt", "random25000.txt", "random50000.txt",
@@ -19,25 +19,22 @@ public class Main {
         Record[] records = fileReader.readFile(fileName);
         int n = records.length;
 
-        performAndTimeSort("Insertion Sort", i -> sortingAlgorithms.insertionSort(Arrays.copyOf(records, n), n));
-        performAndTimeSort("Selection Sort", i -> sortingAlgorithms.selectionSort(Arrays.copyOf(records, n), n));
-        performAndTimeSort("Merge Sort", i -> sortingAlgorithms.mergeSort(Arrays.copyOf(records, n), 0, n-1));
-        // performAndTimeSort("Bogo Sort", i -> sortingAlgorithms.bogoSort(Arrays.copyOf(records, n), n));
+        performAndTimeSort("Insertion Sort", () -> sortingAlgorithms.insertionSort(Arrays.copyOf(records, n), n));
+        performAndTimeSort("Selection Sort", () -> sortingAlgorithms.selectionSort(Arrays.copyOf(records, n), n));
+        performAndTimeSort("Merge Sort", () -> sortingAlgorithms.mergeSort(Arrays.copyOf(records, n), 0, n-1));
     }
 
-    private static void performAndTimeSort(String algorithmName, Function<Integer, Long> sortAction) {
+    private static void performAndTimeSort(String algorithmName, Supplier<Long> sortAction) {
         double totalExecutionTime = 0;
-        long ctr = 0;
         for (int i = 0; i < 5; i++) {
-            long startTime = System.currentTimeMillis();
-            ctr = sortAction.apply(i);
-            long executionTime = System.currentTimeMillis() - startTime;
+            long startTime = System.nanoTime();
+            long frequencyCount = sortAction.get();
+            long executionTime = System.nanoTime() - startTime;
             totalExecutionTime += executionTime;
-            System.out.println((i + 1) + " " + algorithmName + " took " + executionTime + " ms");
+            System.out.println((i + 1) + ". " + algorithmName + " took " + executionTime / 1e6 + " ms and had " + frequencyCount + " operations");
         }
         double averageExecutionTime = totalExecutionTime / 5;
-        System.out.println(algorithmName + " Average Execution time: " + averageExecutionTime + " ms");
-        System.out.println(algorithmName + " Total Operatzions: " + ctr);
+        System.out.println(algorithmName + " Average Execution time: " + averageExecutionTime / 5e6 + " ms");
         System.out.println();
     }
 }

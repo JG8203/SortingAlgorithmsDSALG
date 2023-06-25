@@ -1,3 +1,4 @@
+package com.dlsu;
 /* This is a class to represent a single record.
  * You are NOT allowed to modify this class.
  */

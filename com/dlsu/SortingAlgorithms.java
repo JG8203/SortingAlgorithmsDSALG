@@ -1,6 +1,7 @@
+package com.dlsu;
 public class SortingAlgorithms {
 
-    private void swap(Record[] array, int firstIndex, int secondIndex) {
+    private static void swap(Record[] array, int firstIndex, int secondIndex) {
         Record temp = array[firstIndex];
         array[firstIndex] = array[secondIndex];
         array[secondIndex] = temp;
@@ -97,7 +98,7 @@ public class SortingAlgorithms {
         return ctr;
     }
 
-    private boolean isSorted(Record[] array, int length) {
+    private static boolean isSorted(Record[] array, int length) {
         for (int i = 1; i < length; i++) {
             if (array[i].getIdNumber() < array[i - 1].getIdNumber()) {
                 return false;
@@ -107,7 +108,7 @@ public class SortingAlgorithms {
     }
 
     // Bogo sort algorithm
-    public long bogoSort(Record[] array, int length) {
+    public static long bogoSort(Record[] array, int length) {
         long ctr = 1; // for the outer while loop initialization
         ctr++; // for the while loop condition
         while (!isSorted(array, length)) {

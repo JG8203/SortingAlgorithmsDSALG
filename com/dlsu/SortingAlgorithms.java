@@ -29,8 +29,7 @@ public class SortingAlgorithms {
     public long selectionSort(Record[] array, int length) {
         long ctr = 1; // for the outer for loop initialization
         for (int i = 0; i < length - 1; i++) {
-            int minIndex = i;
-            ctr++; // for the minIndex initialization
+            int minIndex = i; ctr++; // for the minIndex initialization
             ctr++; // for the inner for loop initialization
             for (int j = i + 1; j < length; j++) {
                 ctr++; // for the inner for loop condition
@@ -38,8 +37,11 @@ public class SortingAlgorithms {
                     minIndex = j;
                 }
             }
-            swap(array, minIndex, i);
-            ctr++; // for the swap operation
+            ctr++;// check if statement
+            if(minIndex != i) {
+                swap(array, minIndex, i); ctr++; // for the swap operation
+            }
+            ctr++; // for loop check
         }
         return ctr;
     }

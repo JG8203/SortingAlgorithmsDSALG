@@ -38,7 +38,7 @@ public class Main {
             frequencyCount = sortAction.get();
             long executionTime = System.nanoTime() - startTime;
             totalExecutionTime += executionTime;
-            System.out.println((i + 1) + ". " + algorithmName + " took " + executionTime / 1e6 + " ms");
+            System.out.println((i + 1) + ". " + algorithmName + " took " + executionTime / 1e6 + " ms " + frequencyCount);
         }
         double averageExecutionTime = totalExecutionTime / 5;
         System.out.println(algorithmName + " Average Execution time: " + averageExecutionTime / 1e6 + " ms and Number of Operations: " + frequencyCount);

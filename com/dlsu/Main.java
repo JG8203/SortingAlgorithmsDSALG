@@ -5,7 +5,10 @@ import java.util.function.Supplier;
 
 public class Main {
     // private static final String[] FILE_NAMES = {"random100.txt", "random25000.txt", "random50000.txt", "random75000.txt", "random100000.txt", "totallyreversed.txt", "almostsorted.txt"};
-    private static final String[] FILE_NAMES = {"almostsorted10.txt","totallyreversed10.txt", "random5.txt", "random10.txt","random15.txt","random100.txt"};
+    // private static final String[] FILE_NAMES = {"almostsorted10.txt","totallyreversed10.txt", "random5.txt", "random10.txt","random15.txt","random100.txt"};
+
+    // private static final String[] FILE_NAMES = {"random100.txt", "random25000.txt", "random50000.txt", "random75000.txt", "random100000.txt", "totallyreversed.txt", "almostsorted.txt"};
+    private static final String[] FILE_NAMES = {"almostsorted10.txt","totallyreversed10.txt", "random5.txt", "random10.txt","random15.txt","random100.txt", "random25000.txt", "random50000.txt", "random75000.txt", "random100000.txt", "totallyreversed.txt", "almostsorted.txt"};
 
     public static void main(String[] args) {
         FileReader fileReader = new FileReader();

@@ -63,19 +63,70 @@ public class SortingAlgorithms {
         if (start < end) {
             ctr++; // for the mid assignment
             int mid = (start + end) / 2;
+
             ctr++; // for the first recursive call
             ctr += mergeSort(array, start, mid, writer);
+
             ctr++; // for the second recursive call
             ctr += mergeSort(array, mid + 1, end, writer);
 
-            // ... Rest of mergeSort code ...
-
-            writer.println("After merge, Iteration " + ctr + ":");
-            for (Record r : array) {
-                writer.println(r.getIdNumber() + " " + r.getName());
-            }
-            writer.println();
+            ctr += merge(array, start, mid, end, writer);
         }
+        return ctr;
+    }
+
+    public long merge(Record[] array, int start, int mid, int end, PrintWriter writer) {
+        long ctr = 0; // counter for merge process
+        int n1 = mid - start + 1;
+        int n2 = end - mid;
+
+        /* Create temp arrays */
+        Record[] L = new Record[n1];
+        Record[] R = new Record[n2];
+
+        /*Copy data to temp arrays*/
+        for (int i = 0; i < n1; ++i)
+            L[i] = array[start + i];
+        for (int j = 0; j < n2; ++j)
+            R[j] = array[mid + 1 + j];
+
+        /* Merge the temp arrays */
+        int i = 0, j = 0;
+        int k = start;
+        while (i < n1 && j < n2) {
+            if (L[i].getIdNumber() <= R[j].getIdNumber()) {
+                array[k] = L[i];
+                i++;
+            } else {
+                array[k] = R[j];
+                j++;
+            }
+            k++;
+            ctr++; // for each iteration of the while loop
+        }
+
+        /* Copy remaining elements of L[] if any */
+        while (i < n1) {
+            array[k] = L[i];
+            i++;
+            k++;
+            ctr++; // for each iteration of the while loop
+        }
+
+        /* Copy remaining elements of R[] if any */
+        while (j < n2) {
+            array[k] = R[j];
+            j++;
+            k++;
+            ctr++; // for each iteration of the while loop
+        }
+
+        writer.println("After merge, Iteration " + ctr + ":");
+        for (Record r : array) {
+            writer.println(r.getIdNumber() + " " + r.getName());
+        }
+        writer.println();
+
         return ctr;
     }
 

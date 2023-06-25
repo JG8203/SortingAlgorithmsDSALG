@@ -48,54 +48,51 @@ public class SortingAlgorithms {
     }
 
     public SortResult mergeSort(Record[] array, int start, int end) {
-        long ctr = 0;
+        long ctr = 1;
         if (start < end) {
+            ctr++;
             int mid = (start + end) / 2;
-
             SortResult leftResult = mergeSort(array, start, mid);
             SortResult rightResult = mergeSort(array, mid + 1, end);
 
-            ctr += leftResult.getFrequencyCount() + rightResult.getFrequencyCount();
-
-            Record[] mergedArray = merge(array, start, mid, end);
-            return new SortResult(mergedArray, ctr);
+            SortResult mergeResult = merge(leftResult.getSortedArray(), rightResult.getSortedArray());
+            return new SortResult(mergeResult.getSortedArray(), leftResult.getFrequencyCount() + rightResult.getFrequencyCount() + mergeResult.getFrequencyCount());
         } else {
             return new SortResult(new Record[]{array[start]}, ctr);
         }
     }
 
-    private Record[] merge(Record[] array, int start, int mid, int end) {
-        int leftLength = mid - start + 1;
-        int rightLength = end - mid;
-        Record[] leftArray = new Record[leftLength];
-        Record[] rightArray = new Record[rightLength];
+    private SortResult merge(Record[] leftArray, Record[] rightArray) {
+        long ctr = 0;
+        int leftLength = leftArray.length; ctr++;
+        int rightLength = rightArray.length; ctr++;
+        int mergedLength = leftLength + rightLength; ctr++;
+        Record[] mergedArray = new Record[mergedLength]; ctr++;
 
-        for (int i = 0; i < leftLength; i++) {
-            leftArray[i] = array[start + i];
-        }
+        int i = 0, j = 0, k = 0;
 
-        for (int i = 0; i < rightLength; i++) {
-            rightArray[i] = array[mid + 1 + i];
-        }
-
-        int i = 0, j = 0, k = start;
+        ctr++;
         while (i < leftLength && j < rightLength) {
+            ctr++;
             if (leftArray[i].getIdNumber() <= rightArray[j].getIdNumber()) {
-                array[k++] = leftArray[i++];
+                mergedArray[k++] = leftArray[i++]; ctr++;
             } else {
-                array[k++] = rightArray[j++];
+                mergedArray[k++] = rightArray[j++]; ctr++;
             }
+            ctr++;
         }
-
+        ctr++;
         while (i < leftLength) {
-            array[k++] = leftArray[i++];
+            mergedArray[k++] = leftArray[i++];
+            ctr++;
         }
 
         while (j < rightLength) {
-            array[k++] = rightArray[j++];
+            mergedArray[k++] = rightArray[j++];
+            ctr++;
         }
 
-        return array;
+        return new SortResult(mergedArray, ctr);
     }
 
     public static SortResult bogoSort(Record[] array, int length) {

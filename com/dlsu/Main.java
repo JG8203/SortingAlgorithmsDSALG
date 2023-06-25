@@ -26,7 +26,7 @@ public class Main {
         performAndTimeSort("Insertion Sort", () -> sortingAlgorithms.insertionSort(Arrays.copyOf(records, n), n));
         performAndTimeSort("Selection Sort", () -> sortingAlgorithms.selectionSort(Arrays.copyOf(records, n), n));
         performAndTimeSort("Merge Sort", () -> sortingAlgorithms.mergeSort(Arrays.copyOf(records, n), 0, n-1));
-        performAndTimeSort("Bogo Sort", () -> SortingAlgorithms.bogoSort(Arrays.copyOf(records,n), n));
+        //performAndTimeSort("Bogo Sort", () -> SortingAlgorithms.bogoSort(Arrays.copyOf(records,n), n));
     }
 
     private static void performAndTimeSort(String algorithmName, Supplier<SortResult> sortAction) {

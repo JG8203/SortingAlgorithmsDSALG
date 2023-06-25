@@ -7,8 +7,7 @@ public class Main {
     // private static final String[] FILE_NAMES = {"random100.txt", "random25000.txt", "random50000.txt", "random75000.txt", "random100000.txt", "totallyreversed.txt", "almostsorted.txt"};
     // private static final String[] FILE_NAMES = {"almostsorted10.txt","totallyreversed10.txt", "random5.txt", "random10.txt","random15.txt","random100.txt"};
 
-    // private static final String[] FILE_NAMES = {"random100.txt", "random25000.txt", "random50000.txt", "random75000.txt", "random100000.txt", "totallyreversed.txt", "almostsorted.txt"};
-    private static final String[] FILE_NAMES = {"almostsorted10.txt","totallyreversed10.txt", "random5.txt", "random10.txt","random15.txt","random100.txt", "random25000.txt", "random50000.txt", "random75000.txt", "random100000.txt", "totallyreversed.txt", "almostsorted.txt"};
+    private static final String[] FILE_NAMES = {"random100.txt", "random25000.txt", "random50000.txt", "random75000.txt", "random100000.txt", "totallyreversed.txt", "almostsorted.txt"};
 
     public static void main(String[] args) {
         FileReader fileReader = new FileReader();
@@ -30,18 +29,28 @@ public class Main {
         performAndTimeSort("Bogo Sort", () -> SortingAlgorithms.bogoSort(Arrays.copyOf(records,n), n));
     }
 
-    private static void performAndTimeSort(String algorithmName, Supplier<Long> sortAction) {
+    private static void performAndTimeSort(String algorithmName, Supplier<SortResult> sortAction) {
         double totalExecutionTime = 0;
-        long frequencyCount = 0;
-        for (int i = 0; i < 5; i++) {
+        long totalFrequencyCount = 0;
+        boolean isSorted = true;
+
+        for (int i = 0; i < 1; i++) {
             long startTime = System.nanoTime();
-            frequencyCount = sortAction.get();
+            SortResult result = sortAction.get();
             long executionTime = System.nanoTime() - startTime;
+
             totalExecutionTime += executionTime;
+            totalFrequencyCount += result.getFrequencyCount();
+            isSorted = isSorted && SortingAlgorithms.isSorted(result.getSortedArray(), result.getSortedArray().length);
+
             System.out.println((i + 1) + ". " + algorithmName + " took " + executionTime / 1e6 + " ms");
         }
+
         double averageExecutionTime = totalExecutionTime / 5;
-        System.out.println(algorithmName + " Average Execution time: " + averageExecutionTime / 1e6 + " ms and Number of Operations: " + frequencyCount);
+        System.out.println(algorithmName + " Average Execution time: " + averageExecutionTime / 1e6 + " ms");
+        System.out.println("Total operations: " + totalFrequencyCount);
+        System.out.println("Sorting status: " + (isSorted ? "Successful" : "Failed"));
         System.out.println();
     }
+
 }

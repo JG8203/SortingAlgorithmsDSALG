@@ -1,4 +1,7 @@
 package com.dlsu;
+
+import java.util.Arrays;
+
 public class SortingAlgorithms {
 
     private static void swap(Record[] array, int firstIndex, int secondIndex) {
@@ -7,124 +10,115 @@ public class SortingAlgorithms {
         array[secondIndex] = temp;
     }
 
-    // Insertion sort algorithm
-    public long insertionSort(Record[] array, int length) {
-        long ctr = 1; // for the outer for loop initialization
+    public SortResult insertionSort(Record[] array, int length) {
+        long ctr = 1;
         for (int i = 1; i < length; ++i) {
-            Record key = array[i]; ctr++; // for the key assignment
+            Record key = array[i]; ctr++;
             int j = i - 1; ctr++;
-            ctr++; // for the j initialization
+            ctr++;
             while (j >= 0 && array[j].getIdNumber() > key.getIdNumber()) {
-                ctr++; // for the while loop condition
+                ctr++;
                 array[j + 1] = array[j]; ctr++;
                 j--; ctr++;
             }
             array[j + 1] = key; ctr++;
-            ctr++; // loop check
+            ctr++;
         }
-        return ctr;
+        return new SortResult(array, ctr);
     }
 
-    // Selection sort algorithm
-    public long selectionSort(Record[] array, int length) {
-        long ctr = 1; // for the outer for loop initialization
+    public SortResult selectionSort(Record[] array, int length) {
+        long ctr = 1;
         for (int i = 0; i < length - 1; i++) {
-            int minIndex = i; ctr++; // for the minIndex initialization
-            ctr++; // for the inner for loop initialization
+            int minIndex = i; ctr++;
+            ctr++;
             for (int j = i + 1; j < length; j++) {
-                ctr++; // for the inner for loop condition
+                ctr++;
                 if (array[j].getIdNumber() < array[minIndex].getIdNumber()) {
                     minIndex = j;
                 }
             }
-            ctr++;// check if statement
+            ctr++;
             if(minIndex != i) {
-                swap(array, minIndex, i); ctr++; // for the swap operation
+                swap(array, minIndex, i); ctr++;
             }
-            ctr++; // for loop check
+            ctr++;
         }
-        return ctr;
+        return new SortResult(array, ctr);
     }
 
-    // Merge sort algorithm
-    public long mergeSort(Record[] array, int start, int end) {
-        long ctr = 1; // for the outer if condition
+    public SortResult mergeSort(Record[] array, int start, int end) {
+        long ctr = 0;
         if (start < end) {
-            ctr++; // for the mid assignment
             int mid = (start + end) / 2;
-            ctr++; // for the first recursive call
-            ctr += mergeSort(array, start, mid);
-            ctr++; // for the second recursive call
-            ctr += mergeSort(array, mid + 1, end);
 
-            ctr++; // for the leftArraySize assignment
-            int leftArraySize = mid - start + 1;
-            ctr++; // for the rightArraySize assignment
-            int rightArraySize = end - mid;
+            SortResult leftResult = mergeSort(array, start, mid);
+            SortResult rightResult = mergeSort(array, mid + 1, end);
 
-            ctr++; // for the leftArray initialization
-            Record[] leftArray = new Record[leftArraySize];
-            ctr++; // for the rightArray initialization
-            Record[] rightArray = new Record[rightArraySize];
+            ctr += leftResult.getFrequencyCount() + rightResult.getFrequencyCount();
 
-            ctr++; // for the leftArray assignment
-            System.arraycopy(array, start, leftArray, 0, leftArraySize);
-            ctr++; // for the rightArray assignment
-            System.arraycopy(array, mid + 1, rightArray, 0, rightArraySize);
+            Record[] mergedArray = merge(array, start, mid, end);
+            return new SortResult(mergedArray, ctr);
+        } else {
+            return new SortResult(new Record[]{array[start]}, ctr);
+        }
+    }
 
-            ctr++; // for the k initialization
-            int k = start;
+    private Record[] merge(Record[] array, int start, int mid, int end) {
+        int leftLength = mid - start + 1;
+        int rightLength = end - mid;
+        Record[] leftArray = new Record[leftLength];
+        Record[] rightArray = new Record[rightLength];
 
-            ctr++; // for the inner for loop initialization
-            for (int i = 0, j = 0; (ctr += 2) > 0 && i < leftArraySize && j < rightArraySize; k++) {
-                ctr++; // for the if condition
-                if (leftArray[i].getIdNumber() <= rightArray[j].getIdNumber()) {
-                    array[k] = leftArray[i++]; ctr++;
-                } else {
-                    array[k] = rightArray[j++];
-                    ctr++;
-                }
+        for (int i = 0; i < leftLength; i++) {
+            leftArray[i] = array[start + i];
+        }
+
+        for (int i = 0; i < rightLength; i++) {
+            rightArray[i] = array[mid + 1 + i];
+        }
+
+        int i = 0, j = 0, k = start;
+        while (i < leftLength && j < rightLength) {
+            if (leftArray[i].getIdNumber() <= rightArray[j].getIdNumber()) {
+                array[k++] = leftArray[i++];
+            } else {
+                array[k++] = rightArray[j++];
+            }
+        }
+
+        while (i < leftLength) {
+            array[k++] = leftArray[i++];
+        }
+
+        while (j < rightLength) {
+            array[k++] = rightArray[j++];
+        }
+
+        return array;
+    }
+
+    public static SortResult bogoSort(Record[] array, int length) {
+        long ctr = 1;
+        ctr++;
+        while (!isSorted(array, length)) {
+            for (int i = 0; i < length; i++) {
+                int randomIndex = (int) (Math.random() * (i + 1));
+                ctr++;
+                swap(array, i, randomIndex);
                 ctr++;
             }
-
-            ctr++; // for the final failing inner loop condition check
-            for (int i = k - start; i < leftArraySize; i++, k++) {
-                array[k] = leftArray[i];
-                ctr++; // for the assignment operation
-                ctr++; // loop check
-            }
-
-            ctr++; // for the final failing inner loop condition check
-            for (int j = k - (mid + 1); j < rightArraySize; j++, k++) {
-                array[k] = rightArray[j]; ctr++; // for the assignment operation
-                ctr++;// loop check
-            }
+            ctr++;
         }
-        return ctr;
+        return new SortResult(array, ctr);
     }
 
-    private static boolean isSorted(Record[] array, int length) {
+    public static boolean isSorted(Record[] array, int length) {
         for (int i = 1; i < length; i++) {
             if (array[i].getIdNumber() < array[i - 1].getIdNumber()) {
                 return false;
             }
         }
         return true;
-    }
-
-    // Bogo sort algorithm
-    public static long bogoSort(Record[] array, int length) {
-        long ctr = 1; // for the outer while loop initialization
-        ctr++; // for the while loop condition
-        while (!isSorted(array, length)) {
-            for (int i = 0; i < length; i++) {
-                int randomIndex = (int) (Math.random() * (i + 1));
-                ctr++; // for the randomIndex assignment
-                swap(array, i, randomIndex);
-                ctr++; // for the swap operation
-            }
-            ctr++; // for the while loop condition
-        }
-        return ctr;
     }
 }

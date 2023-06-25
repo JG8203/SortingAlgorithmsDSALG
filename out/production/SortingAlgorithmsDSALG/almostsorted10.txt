@@ -1,11 +1,11 @@
 10
-2757949 Gallant Gallant
-3108760 Gallant Jackson
-3182059 Admiring Einstein
-3284388 Jackson Gallant
-5413188 Strange Keldysh
-6027225 Admiring Archimedes
-6611276 Haslett Shirley
-6793344 Vigorous Wonderful
-8290377 Einstein Archimedes
-8568430 Shirley Keldysh
+330641 Wonderful Kare
+809161 Kare Keldysh
+848978 Einstein Jackson
+1041984 Haslett Elated
+3063937 Wonderful Gallant
+3746758 Archimedes Gallant
+4244187 Keldysh Jackson
+7117548 Wonderful Vigorous
+7186309 Keldysh Admiring
+8270468 Shirley Admiring

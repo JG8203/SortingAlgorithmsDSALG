@@ -18,15 +18,16 @@ public class FileGenerator {
     private static final Random RANDOM = new Random();
 
     public static void main(String[] args) throws IOException {
-        generateFile("almostsorted10.txt", 10, true);
-        generateFile("totallyreversed10.txt", 10, false);
-        generateFile("random5.txt", 5, true);
-        generateFile("random10.txt", 10, true);
-        generateFile("random15.txt", 15, true);
-        generateFile("random100.txt", 100, true);
+        generateFile("almostsorted10.txt", 10, true, true);
+        generateFile("totallyreversed10.txt", 10, true, false);
+        generateFile("random5.txt", 5, false, true);
+        generateFile("random10.txt", 10, false, true);
+        generateFile("random15.txt", 15, false, true);
+        generateFile("random100.txt", 100, false, true);
     }
 
-    private static void generateFile(String fileName, int numLines, boolean ascending) throws IOException {
+
+    private static void generateFile(String fileName, int numLines, boolean sort, boolean ascending) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             writer.write(String.valueOf(numLines));
             writer.newLine();
@@ -36,10 +37,11 @@ public class FileGenerator {
                 numbers[i] = RANDOM.nextInt(10000000);  // a random number between 0 and 10000000
             }
 
-            Arrays.sort(numbers);
-
-            if (!ascending) {
-                Collections.reverse(Arrays.asList(numbers));
+            if (sort) {
+                Arrays.sort(numbers);
+                if (!ascending) {
+                    Collections.reverse(Arrays.asList(numbers));
+                }
             }
 
             for (Integer number : numbers) {

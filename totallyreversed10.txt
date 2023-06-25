@@ -1,11 +1,11 @@
 10
-9731305 Gallant Shirley
-7684411 Elated Wonderful
-7362085 Gallant Haslett
-6878984 Shirley Archimedes
-6544208 Keldysh Keldysh
-6461525 Vigorous Keldysh
-4959452 Vigorous Wonderful
-4618156 Jackson Archimedes
-3325494 Gallant Gallant
-3251399 Einstein Archimedes
+8853058 Wonderful Gallant
+6410176 Wonderful Vigorous
+5905406 Gallant Elated
+5870581 Archimedes Wonderful
+4514165 Jackson Gallant
+3975082 Strange Jackson
+3481943 Shirley Einstein
+1715411 Vigorous Haslett
+1607382 Kare Einstein
+732170 Jackson Jackson

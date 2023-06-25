@@ -29,8 +29,7 @@ public class SortingAlgorithms {
     public long selectionSort(Record[] array, int length) {
         long ctr = 1; // for the outer for loop initialization
         for (int i = 0; i < length - 1; i++) {
-            int minIndex = i;
-            ctr++; // for the minIndex initialization
+            int minIndex = i; ctr++; // for the minIndex initialization
             ctr++; // for the inner for loop initialization
             for (int j = i + 1; j < length; j++) {
                 ctr++; // for the inner for loop condition
@@ -38,8 +37,11 @@ public class SortingAlgorithms {
                     minIndex = j;
                 }
             }
-            swap(array, minIndex, i);
-            ctr++; // for the swap operation
+            ctr++;// check if statement
+            if(minIndex != i) {
+                swap(array, minIndex, i); ctr++; // for the swap operation
+            }
+            ctr++; // for loop check
         }
         return ctr;
     }
@@ -77,22 +79,25 @@ public class SortingAlgorithms {
             for (int i = 0, j = 0; (ctr += 2) > 0 && i < leftArraySize && j < rightArraySize; k++) {
                 ctr++; // for the if condition
                 if (leftArray[i].getIdNumber() <= rightArray[j].getIdNumber()) {
-                    array[k] = leftArray[i++];
+                    array[k] = leftArray[i++]; ctr++;
                 } else {
                     array[k] = rightArray[j++];
+                    ctr++;
                 }
+                ctr++;
             }
 
             ctr++; // for the final failing inner loop condition check
             for (int i = k - start; i < leftArraySize; i++, k++) {
                 array[k] = leftArray[i];
                 ctr++; // for the assignment operation
+                ctr++; // loop check
             }
 
             ctr++; // for the final failing inner loop condition check
             for (int j = k - (mid + 1); j < rightArraySize; j++, k++) {
-                array[k] = rightArray[j];
-                ctr++; // for the assignment operation
+                array[k] = rightArray[j]; ctr++; // for the assignment operation
+                ctr++;// loop check
             }
         }
         return ctr;
